@@ -1,0 +1,17 @@
+#!/bin/sh
+
+SHELL_PATH="/usr/local/bin" # `dirname "${SHELL_NAME}"`
+
+if [ "." = "$SHELL_PATH" ]
+then
+    SHELL_PATH=$(pwd)
+fi
+
+javacmd="$JAVA_HOME/bin/java"
+jarfile="$SHELL_PATH/udclient-lib.jar"
+
+if [ -r "$jarfile" ]; then
+    "$javacmd" $JAVA_OPTS -jar "$jarfile" "$@"
+else
+    echo "Didn't find $jarfile in directory ${SHELL_PATH}"
+fi

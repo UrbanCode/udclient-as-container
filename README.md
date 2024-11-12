@@ -1,13 +1,16 @@
 # udclient-as-container
+
 build your own containerized version of udclient (deploy cli)
 
 ## Download/copy udclient and build your docker container
 
-Download or Copy (from installation media of your Deploy Serve, is in <installmediaroot/opt/tomcat/webapps/ROOT/tools/>) your udclient.zip into this location, unzip it and run docker build
+Download from your DevOps Deploy installation ("<https://yourDeployServer:port/tools/udclient.zip>") or Copy from installation media of your Deploy Server( <installmediaroot/opt/tomcat/webapps/ROOT/tools/>) your udclient.zip into this location, unzip it and run docker build
+
+### example shell script building with docker
 
 ```sh
 export DEPLOY_VERSION=8.0.0
-wget https://<yourUCDServerurl:port>/tools/udclient.zip
+wget https://<yourDeployServerurl:port>/tools/udclient.zip
 unzip udclient
 docker build . -t udclient:$DEPLOY_VERSION
 ```
@@ -16,33 +19,38 @@ docker build . -t udclient:$DEPLOY_VERSION
 
 here an example with building for semeru-11 target
 
+### example shell script building with docker targets
+
 ```sh
 export DOCKER_BUILDKIT=1
 export JRETYPE=semeru-11
 export DEPLOY_VERSION=8.0.0
-wget https://<yourUCDServerurl:port>/tools/udclient.zip
+wget https://<yourDeployServerurl:port>/tools/udclient.zip
 unzip udclient
 docker build -f Dockerfile.variations --build-arg 'TARGET='$JRETYPE -t udclient:$DEPLOY_VERSION-$JRETYPE .  
 ```
 
-## what is ucdcli?
+## what is udcli?
 
-could not get udclient to work (got always "Didn't find /usr/local/bin/lib/udclient-lib.jar in directory /usr/local/bin" error, no idea why) so simplified setup...
+Wrapper around calling udclient as direct call of udclient did not work.  
+Got always "Didn't find /usr/local/bin/lib/udclient-lib.jar in directory /usr/local/bin" error.
 
 ## How to use this docker container
 
 Usage is similar to the installed cli client. Just add the call to the docker container to it.
 
-Example:
+### Example how to run container
 
 ```sh
- docker run ucdclient -weburl https://<yourUCDServerurl:port> -username <your username> -password <your password> getAgents
+ docker run udclient -weburl https://<yourDeployServerurl:port> -username <your username> -password <your password> getAgents
 ```
+
+### Default output without parameters
 
 If you run it without any parameters you will get a simple help info
 
 ```sh
- docker run --rm osmanburucuibm/udclient:8.0.0-temurin-jre-ubi9-minimal                              
+ docker run --rm udclient                              
  Global Args:
 
          -authtoken, --authtoken

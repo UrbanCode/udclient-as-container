@@ -1,0 +1,27 @@
+ARG TARGET="temurin-alpine-11"
+
+FROM ibm-semeru-runtimes:open-11-jre as semeru-11
+
+FROM ibm-semeru-runtimes:open-11-jre-focal as semeru-focal-11
+
+FROM ibm-semeru-runtimes:open-11-jre-jammy as semeru-jammy-11
+
+FROM eclipse-temurin:11-jre-alpine as temurin-alpine-11
+
+FROM eclipse-temurin:11-jre as temurin-11
+
+FROM eclipse-temurin:11-jre-focal as temurin-focal-11
+
+FROM eclipse-temurin:11-jre-jammy as temurin-jammy-11
+
+FROM eclipse-temurin:11-jre-ubi9-minimal as temurin-jre-ubi9-minimal
+
+FROM ibm-semeru-runtimes:open-11-jre as semeru-jre
+
+FROM adoptopenjdk/openjdk11:alpine-jre as adoptjdk-alpine
+
+FROM ${TARGET}
+COPY udclient/lib/* /usr/local/bin/
+COPY udclient/udclient /usr/local/bin
+COPY udcli /usr/local/bin/
+ENTRYPOINT [ "udcli" ]
