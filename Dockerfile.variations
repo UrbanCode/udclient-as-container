@@ -16,9 +16,10 @@ FROM eclipse-temurin:11-jre-jammy as temurin-jammy-11
 
 FROM eclipse-temurin:11-jre-ubi9-minimal as temurin-jre-ubi9-minimal
 
-FROM ibm-semeru-runtimes:open-11-jre as semeru-jre
+FROM ibm-semeru-runtimes:open-17-jre as semeru-jre
 
-FROM adoptopenjdk/openjdk11:alpine-jre as adoptjdk-alpine
+FROM adoptopenjdk/openjdk11:alpine-jre as adoptjdk-alpine-jre
+FROM adoptopenjdk/openjdk11:x86_64-alpine-jre-11.0.29_7 as adoptopenjdk-alpine-jre
 
 FROM ${TARGET}
 COPY udclient/lib/* /usr/local/bin/
