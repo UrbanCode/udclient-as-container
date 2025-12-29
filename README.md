@@ -9,7 +9,7 @@ Download from your DevOps Deploy installation ("<https://yourDeployServer:port/t
 ### example shell script building with docker
 
 ```sh
-export DEPLOY_VERSION=8.0.0
+export DEPLOY_VERSION=8.2.0
 wget https://<yourDeployServerurl:port>/tools/udclient.zip
 unzip udclient
 docker build . -t udclient:$DEPLOY_VERSION
@@ -17,23 +17,20 @@ docker build . -t udclient:$DEPLOY_VERSION
 
 ## using Dockerfile.variations
 
-here an example with building for semeru-11 target
+here an example with building for semeru-25 target
 
 ### example shell script building with docker targets
 
 ```sh
 export DOCKER_BUILDKIT=1
-export JRETYPE=semeru-11
-export DEPLOY_VERSION=8.0.0
+DEPLOY_VERSION=8.2.0
+JRETYPE=temurin-alpine
+JREVERSION=25
 wget https://<yourDeployServerurl:port>/tools/udclient.zip
 unzip udclient
-docker build -f Dockerfile.variations --build-arg 'TARGET='$JRETYPE -t udclient:$DEPLOY_VERSION-$JRETYPE .  
+docker build -f Dockerfile.variations --build-arg 'PROVIDER='$JRETYPE --build-arg 'VERSION='$JREVERSION -t udclient:$DEPLOY_VERSION-$JRETYPE-$JREVERSION .
+
 ```
-
-## what is udcli?
-
-Wrapper around calling udclient as direct call of udclient did not work.  
-Got always "Didn't find /usr/local/bin/lib/udclient-lib.jar in directory /usr/local/bin" error.
 
 ## How to use this docker container
 
@@ -81,7 +78,7 @@ If you run it without any parameters you will get a simple help info
             Optional. Can be set via the environment variable UC_TLS_VERIFY_CERTS. This option will only allow the command to complete if the server\'s certificate is trusted. (Default Value: false)
 
          -weburl, --weburl
-            Required. Can be set via the environment variable DS_WEB_URL. The base URL of the UrbanCode Deploy server. Eg. http://ucd.domain.com:8080
+            Required. Can be set via the environment variable DS_WEB_URL. The base URL of the DevOps Deploy server. Eg. http://ucd.domain.com:8080
 
  Global Flags:
 
@@ -112,4 +109,11 @@ If you run it without any parameters you will get a simple help info
 * <https://stackoverflow.com/questions/17466699/how-do-i-build-a-dockerfile-if-the-name-of-the-dockerfile-isnt-dockerfile>
 * <https://docs.docker.com/build/building/packaging/>
 * <https://www.ibm.com/docs/en/urbancode-deploy/7.3.1> and <https://www.ibm.com/docs/en/urbancode-deploy/7.3.1?topic=function-command-line-client-cli-reference>
-* <https://www.ibm.com/docs/en/urbancode-deploy/8.0.0> and <https://www.ibm.com/docs/en/urbancode-deploy/8.0.0?topic=function-command-line-client-cli-reference>
+* <https://www.ibm.com/docs/en/devops-deploy/8.2.0> and <https://www.ibm.com/docs/en/devops-deploy/8.2.0?topic=function-command-line-client-cli-reference>
+
+## Changes
+
+### 2025.12.29
+
+* removed udcli by fixing JAVA_HOME setting
+* added input parameters for build_example.sh to support more flexible selection of JRE types and versions
