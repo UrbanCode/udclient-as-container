@@ -111,6 +111,13 @@ If you run it without any parameters you will get a simple help info
 * <https://www.ibm.com/docs/en/urbancode-deploy/7.3.1> and <https://www.ibm.com/docs/en/urbancode-deploy/7.3.1?topic=function-command-line-client-cli-reference>
 * <https://www.ibm.com/docs/en/devops-deploy/8.2.0> and <https://www.ibm.com/docs/en/devops-deploy/8.2.0?topic=function-command-line-client-cli-reference>
 
+## JRE inforamtions
+
+### Eclipse Temurin and Semeru
+
+based on information from the image for [Eclipse-Temurin-25](https://hub.docker.com/_/eclipse-temurin) the JRE is available in `ENV JAVA_HOME=/opt/java/openjdk`
+based on information from the image for [Semeru runtimes](https://hub.docker.com/_/ibm-semeru-runtimes) the JRE is available in `ENV JAVA_HOME=/opt/java/openjdk`
+
 ## Changes
 
 ### 2025.12.29
